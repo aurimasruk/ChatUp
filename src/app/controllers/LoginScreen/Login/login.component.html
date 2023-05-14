@@ -1,0 +1,67 @@
+<div class="container py-5 h-100">
+    <div class="row d-flex justify-content-center align-items-center h-100">
+        <div class="card bg-dark text-white" style="border-radius: 1rem; min-width: 300px; backdrop-filter: blur(30px); --bs-bg-opacity: .5; width: 550px;">
+            <div class="card-body text-center" [ngClass]="smallScreen ? 'px-2 py-5' : 'p-5'">
+
+                <div class="mb-md-5 mt-md-4 pb-5">
+                    <form [formGroup]="form" (ngSubmit)="onFormSubmit()">
+                        <!-- <h2 class="fw-bold mb-2 text-uppercase">Login</h2> -->
+                        
+                        <!-- Welcome header -->
+                        <div class="waviy">
+                            <span class="header-text">Welcome to</span>
+                            <span class="letter-animation" style="--i:1">W</span>
+                            <span class="letter-animation" style="--i:2">e</span>
+                            <span class="letter-animation" style="--i:3">b</span>
+                            <span class="letter-animation" style="--i:4">C</span>
+                            <span class="letter-animation" style="--i:5">h</span>
+                            <span class="letter-animation" style="--i:6">a</span>
+                            <span class="letter-animation" style="--i:7">t</span>
+                        </div>
+                        
+                        <p class="text-white-50 mb-5">Please enter your login and password!</p>
+
+                        <div class="form-outline form-white mb-4">
+                            <label class="form-label" for="typeEmailX">Username</label>
+                            <input type="email" id="typeEmailX" class="form-control form-control-md" formControlName="username"
+                                [ngClass]="{'border-danger': !form.controls['username'].valid && !form.controls['username'].untouched}">
+                        </div>
+
+                        <div class="form-outline form-white mb-4">
+                            <label class="form-label" for="typePasswordX">Password</label>
+                            <input type="password" id="typePasswordX" class="form-control form-control-md" formControlName="password"
+                                [ngClass]="{'border-danger': !form.controls['password'].valid && !form.controls['password'].untouched}">
+                        </div>
+
+                        <button class="btn btn-outline-light btn-lg px-5" type="submit" [disabled]="isBusy">Login</button>
+                        <p class="mb-0 text-danger pt-1 h6" *ngIf="errorMessage">{{errorMessage}}</p>
+                    </form>
+                </div>
+
+                <div>
+                    <p class="mb-0">Don't have an account? <a type="button" (click)="changeScreen()" class="text-white-50 fw-bold">Sign Up</a>
+                    </p>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- <div class=" d-flex justify-content-center">
+    <form [formGroup]="form" (ngSubmit)="onFormSubmit()" style="max-width: 300px;">
+        <div class="form-group">
+            <label for="username">Username</label>
+            <input type="text" class="form-control" id="username" placeholder="Enter email" formControlName="username"
+                [ngClass]="{'border-danger': !form.controls['username'].valid && !form.controls['username'].untouched}">
+        </div>
+        <div class="form-group mt-2">
+            <label for="password">Password</label>
+            <input type="password" class="form-control" id="password" placeholder="Password" formControlName="password"
+                [ngClass]="{'border-danger': !form.controls['password'].valid && !form.controls['password'].untouched}">
+        </div>
+        <button type="submit" class="btn btn-primary mt-3">Login</button>
+    
+        <p>Not a member? <a href="/register">Register</a></p>
+    </form>
+</div> -->

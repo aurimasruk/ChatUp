@@ -1,0 +1,4 @@
+<app-background></app-background>
+
+<app-login *ngIf="currentScreen == 'login'" (changeScreenEmitter)="onChangeScreen($event)"></app-login>
+<app-register *ngIf="currentScreen == 'register'" (changeScreenEmitter)="onChangeScreen($event)"></app-register>

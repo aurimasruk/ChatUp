@@ -1,0 +1,59 @@
+.chat-list li {
+    padding: 10px 15px;
+    list-style: none;
+    border-radius: 3px
+}
+.chat-list img {
+    width: 45px;
+    border-radius: 50%;
+    float: left;
+}
+.chat-list button {
+    vertical-align: middle;
+}
+
+.about {
+    float: left;
+    padding-left: 8px
+}
+
+.chat-header {
+    height: 50px;
+}
+.back-arrow-icon {
+    font-size: 33px;
+    line-height: 100%;
+}
+
+
+
+/* Text */
+.header-text {
+    user-select: none;
+    position: relative;
+    display: inline-block;
+    font-size: 40px;
+    color: #fff;
+    margin-right: 10px;
+}
+@media screen and (max-width: 450px) {
+    .header-text {
+        display: block;
+    }
+}
+  
+.waviy .letter-animation {
+    user-select: none;
+    position: relative;
+    display: inline-block;
+    font-size: 40px;
+    color: #fff;
+    text-transform: uppercase;
+    animation: flip 2s infinite;
+    animation-delay: calc(.2s * var(--i))
+  }
+  @keyframes flip {
+    0%,80% {
+      transform: rotateY(360deg) 
+    }
+  }

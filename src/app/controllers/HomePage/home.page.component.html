@@ -1,0 +1,81 @@
+<div class="d-flex w-100 h-100" style="height: 100vh; min-width: 300px;">
+    <app-side-nav (newChatOpened)="onNewActiveChatOpened($event)" [smallScreen]="smallScreen" [navBarOpen]="navBarOpen"></app-side-nav>
+    
+    <div class="container">
+        <!-- Welcome text (when no chat is open) -->
+        <div class="w-100 d-flex justify-content-center mt-5" *ngIf="activeChatRoomId == null">
+            <!-- <h1 class="text-light" style="user-select: none;">Welcome to WebChat</h1> -->
+            <div class="waviy">
+                <span class="header-text">Welcome to</span>
+                <span class="letter-animation" style="--i:1">W</span>
+                <span class="letter-animation" style="--i:2">e</span>
+                <span class="letter-animation" style="--i:3">b</span>
+                <span class="letter-animation" style="--i:4">C</span>
+                <span class="letter-animation" style="--i:5">h</span>
+                <span class="letter-animation" style="--i:6">a</span>
+                <span class="letter-animation" style="--i:7">t</span>
+            </div>
+        </div>
+        
+        <div *ngIf="isAdmin" class=" w-100 d-flex justify-content-center ps-4 mt-2 row">
+            <h2 class="text-light">Admin controls</h2>
+            <input [(ngModel)]="usernameSearchInput" (ngModelChange)="searchUsers()" type="text" class="form-control rounded" id="search" placeholder="Find users...">
+            <!-- All users -->
+            <ul *ngIf="!usernameSearchInput" class="list-group pe-0">
+                <li *ngFor="let user of allUsersForAdmin" class="list-group-item d-flex">
+                    {{user.username}}
+                    <button class="btn btn-primary ms-auto" (click)="deleteUser(user)">Delete</button>
+                </li>
+            </ul>
+            <!-- Searched users -->
+            <ul *ngIf="usernameSearchInput" class="list-group pe-0">
+                <li *ngFor="let user of usersSearchResult" class="list-group-item d-flex">
+                    {{user.username}}
+                    <button class="btn btn-primary ms-auto" (click)="deleteUser(user)">Delete</button>
+                </li>
+            </ul>
+        </div>
+    </div>
+    
+    <!-- Chat (responsive width for side navigation)-->
+    <div class="bg-secondary h-100 position-fixed" *ngIf="activeChatRoomId != null"
+        [ngStyle]="{'margin-left': smallScreen ? '0px' : '300px', 'width': smallScreen ? '100%' : 'calc(100% - 300px)'}">
+        
+        <!-- Chat header -->
+        <div class="w-100 bg-primary chat-header p-2 d-flex" [ngStyle]="{'margin-left': smallScreen && navBarOpen ? '300px' : '0px'}">
+            <div *ngIf="smallScreen">
+                <i class="bi back-arrow-icon text-light me-2" [ngClass]="backArrowIcon" (click)="onToggleNavBarClick()"
+                    (mouseover)="backArrowIcon='bi-arrow-left-circle-fill'" (mouseout)="backArrowIcon='bi-arrow-left-circle'">
+                </i>
+            </div>
+            <img src="https://bootdey.com/img/Content/avatar/avatar1.png" alt="avatar" class="h-100 me-1">
+            <div class="text-light align-self-end">{{activeChatRoom.title}}</div>
+            <div *ngIf="activeChatRoom.isUserDeleted" class="text-danger align-self-end ms-1">(User is deleted)</div>
+            
+        </div>
+        
+        <!-- Chat -->
+        <div class="p-2">
+            <!-- Chat container -->
+            <div class="d-flex justify-content-end align-items-start" style="height: calc(100vh - 110px);">
+                <!-- Messages -->
+                <ul #messagesListContainer class="w-100 list-group d-flex flex-column overflow-auto" style="height: auto; max-height: 100%; margin-top: auto;">
+                    <li *ngFor="let message of messageList" class="d-flex" [ngClass]="message.fromUsername == currentUserName ? 'justify-content-end' : 'justify-content-start'">
+                        <div class="text-wrap text-break p-2 my-1 rounded-3 me-1" style="max-width: 50%; min-width: 100px; width: fit-content;" [ngClass]="message.fromUsername == currentUserName ? 'bg-info' : 'bg-light'">
+                            {{message.message}}
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        
+            <!-- Message input -->
+            <div class="input-group w-100 position-static mt-1">
+                <input type="text" class="form-control" placeholder="Enter a message..." [(ngModel)]="messageInput" (keydown.Enter)="onSendMessageClick()">
+                <div class="input-group-append">
+                    <button class="btn btn-outline-light rounded-0" type="button" (click)="onSendMessageClick()" [disabled]="!activeChatRoom.isUserDeleted"><i class="bi bi-send-fill"></i></button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
